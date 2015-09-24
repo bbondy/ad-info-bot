@@ -1,7 +1,10 @@
 import {init, getAdInfo, exit} from 'ad-info';
 import top500 from './top500';
+let fs = require('fs');
+let perSiteInfo = {};
 
-var sequence = init();
+
+let sequence = init();
 top500.forEach(siteHost => {
   sequence = sequence.then(() => {
     console.log('doing lookup for site: ', siteHost);
@@ -14,6 +17,9 @@ top500.forEach(siteHost => {
   });
   sequence = sequence.then(info  => {
     console.log('site results: ', siteHost, info);
+    perSiteInfo[siteHost] = info;
   });
 });
-sequence.then(exit).catch(err => console.error('something went wrong:', err));
+sequence.then(() => {
+  fs.writeFileSync('./perSiteInfo.json', JSON.stringify(perSiteInfo));
+}).then(exit).catch(err => console.error('something went wrong:', err));
