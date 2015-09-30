@@ -1,10 +1,11 @@
 import {init, getAdInfo, exit} from 'ad-info';
 import top500 from './top500';
+var path = require('path');
 let fs = require('fs');
 let perSiteInfo = {};
 
+let sequence = init('./node_modules/ad-info/data/easylist.txt');
 
-let sequence = init();
 top500.forEach(siteHost => {
   sequence = sequence.then(() => {
     console.log('doing lookup for site: ', siteHost);
