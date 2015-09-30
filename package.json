@@ -9,7 +9,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node src/main.js"
+    "build": "babel src --out-dir dist --source-maps",
+    "start": "node dist/main.js"
   },
   "repository": {
     "type": "git",
