@@ -36,8 +36,11 @@ let sequence = init('./node_modules/ad-info/data/easylist.txt').then(() => {
         console.log(`http://${siteHost}`);
 
         getAdInfo(`http://${siteHost}`).then((info) => {
-          perSiteInfo[siteHost] = info;
-          fs.writeFileSync('./perSiteInfo.json', JSON.stringify(perSiteInfo));
+          // To save space, only add information if there are ads on the page
+          if (info.length > 0) {
+            perSiteInfo[siteHost] = info;
+            fs.writeFileSync('./perSiteInfo.json', JSON.stringify(perSiteInfo));
+          }
           // Tell the queue we processed the site
           ch.ack(msg);
         }).catch((err) => {
