@@ -4,7 +4,8 @@
   "description": "Uses ad-info across Alexa top 500 sites",
   "main": "src/main.js",
   "dependencies": {
-    "ad-info": "^0.0.11"
+    "ad-info": "^0.0.11",
+    "amqplib": "^0.4.0"
   },
   "devDependencies": {},
   "scripts": {
