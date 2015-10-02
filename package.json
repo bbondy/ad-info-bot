@@ -14,7 +14,8 @@
     "process": "node dist/processSites.js",
     "push": "node dist/pushSites.js",
     "clear": "node dist/clearSites.js",
-    "start": "node dist/main.js"
+    "start": "node dist/main.js",
+    "size": "rabbitmqctl list_queues"
   },
   "repository": {
     "type": "git",
