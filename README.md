@@ -23,3 +23,7 @@ Uses [ad-info](https://github.com/bbondy/ad-info) across the Alexa top sites and
 ## Clear AMQP qeuue
 
     npm run clear
+
+## Get queue sizes
+
+    npm run size
