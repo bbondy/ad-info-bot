@@ -31,6 +31,10 @@ init('./node_modules/ad-info/data/easylist.txt')
   .then(({ch}) => {
     ch.assertQueue(queueName, {durable: true});
     ch.consume(queueName, (msg) => {
+      if (!msg) {
+        throw new Error('Warning, message is empty!');
+      }
+
       let siteHost = msg.content.toString();
       console.log(`http://${siteHost}`);
 
