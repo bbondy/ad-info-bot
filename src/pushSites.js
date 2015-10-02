@@ -14,16 +14,18 @@ initAMQPChannel('amqp://localhost')
     ch.assertQueue(queueName, {
       durable: true
     });
-    top1M.forEach(site => {
+    top1M.forEach((site, i) => {
       ch.sendToQueue(queueName, Buffer(site), {
         persistent: true
       });
       console.log(` [x] Sent ${site}`);
+      if (i === top1M.length - 1) {
+        setTimeout(() => {
+          conn.close();
+          process.exit(0);
+        }, 10000);
+      }
     });
-    setTimeout(() => {
-      conn.close();
-      process.exit(0);
-    }, 10000);
   })
   .catch(err => {
     console.error(err);
