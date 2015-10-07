@@ -3,7 +3,11 @@ import top500 from './top500';
 var path = require('path');
 let fs = require('fs');
 let perSiteInfo = {};
+let badFingerprints = new Set();
 
+function writeBadFingerprints() {
+  fs.writeFile('./badFingerprints.json', JSON.stringify(badFingerprints), 'utf-8');
+}
 let sequence = init('./node_modules/ad-info/data/easylist.txt');
 
 top500.forEach(siteHost => {
@@ -18,6 +22,10 @@ top500.forEach(siteHost => {
   });
   sequence = sequence.then(info  => {
     console.log('site results: ', siteHost, info);
+    if (info.badFingerprints) {
+      info.badFingerprints.forEach((o) => badFingerprints.add(o.badFingerprint));
+      writeBadFingerprints();
+    }
     perSiteInfo[siteHost] = info;
   });
 });
