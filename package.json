@@ -4,10 +4,12 @@
   "description": "Uses ad-info across Alexa top 500 sites",
   "main": "src/main.js",
   "dependencies": {
-    "ad-info": "^0.0.11",
+    "ad-info": "^0.0.12",
     "amqplib": "^0.4.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel": "^5.8.23"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src --out-dir dist --source-maps",
