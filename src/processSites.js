@@ -7,6 +7,7 @@ import {initAMQPChannel} from './amqp.js';
 // - numResourcesRequested (Number)
 // - numResourcesBlocked (Number)
 // - resourcesBlocked (Array)
+// - matchedFilters (Array)
 // - iframesData (Array)
 // - pageLoadTime (number of milliseconds it took to load the page)
 // - abpTime (number of milliseconds spent using ad block plus filter lookups on each URL)

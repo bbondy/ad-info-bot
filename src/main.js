@@ -4,9 +4,13 @@ var path = require('path');
 let fs = require('fs');
 let perSiteInfo = {};
 let badFingerprints = new Set();
+let matchedFilters = new Set();
 
 function writeBadFingerprints() {
   fs.writeFile('./badFingerprints.json', JSON.stringify(badFingerprints), 'utf-8');
+}
+function writeMatchedFilters() {
+  fs.writeFile('./matchedFilters.json', JSON.stringify(matchedFilters), 'utf-8');
 }
 let sequence = init('./node_modules/ad-info/data/easylist.txt');
 
@@ -22,13 +26,22 @@ top500.forEach(siteHost => {
   });
   sequence = sequence.then(info  => {
     console.log('site results: ', siteHost, info);
-    if (info.badFingerprints) {
+    if (info && info.badFingerprints) {
       info.badFingerprints.forEach((o) => badFingerprints.add(o.badFingerprint));
       writeBadFingerprints();
+    }
+    if (info && info.matchedFilters) {
+      info.matchedFilters.forEach((matchedFilter) => matchedFilters.add(matchedFilter));
+      writeMatchedFilters();
     }
     perSiteInfo[siteHost] = info;
   });
 });
 sequence.then(() => {
   fs.writeFileSync('./perSiteInfo.json', JSON.stringify(perSiteInfo));
-}).then(exit).catch(err => console.error('something went wrong:', err));
+}).then(exit).catch(err => {
+  console.error('something went wrong:', err);
+  if (err.stack) {
+    console.error(err.stack);
+  }
+});
