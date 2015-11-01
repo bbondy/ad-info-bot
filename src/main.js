@@ -5,12 +5,17 @@ let fs = require('fs');
 let perSiteInfo = {};
 let badFingerprints = new Set();
 let matchedFilters = new Set();
+// We do want to store dupes here
+let resourcesRequested = [];
 
 function writeBadFingerprints() {
   fs.writeFile('./badFingerprints.json', JSON.stringify(badFingerprints), 'utf-8');
 }
 function writeMatchedFilters() {
   fs.writeFile('./matchedFilters.json', JSON.stringify(matchedFilters), 'utf-8');
+}
+function writeRequestedResources() {
+  fs.writeFile('./resourcesRequested.txt', resourcesRequested.join("\n"), 'utf-8');
 }
 let sequence = init('./node_modules/ad-info/data/easylist.txt');
 
@@ -33,6 +38,10 @@ top500.forEach(siteHost => {
     if (info && info.matchedFilters) {
       info.matchedFilters.forEach((matchedFilter) => matchedFilters.add(matchedFilter));
       writeMatchedFilters();
+    }
+    if (info && info.resourcesRequested) {
+      info.resourcesRequested.forEach((resourceRequested) => resourcesRequested.push(resourceRequested));
+      writeRequestedResources();
     }
     perSiteInfo[siteHost] = info;
   });

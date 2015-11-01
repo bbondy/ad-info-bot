@@ -28,6 +28,9 @@ node_modules
 
 # Output file
 perSiteInfo.json
+resourcesRequested.txt
+badFingerprints.json
+matchedFilters.json
 
 # Built files
 dist
